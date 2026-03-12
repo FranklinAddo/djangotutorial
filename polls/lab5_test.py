@@ -2,21 +2,19 @@ import urllib.request
 
 from django.test import SimpleTestCase, TestCase, TransactionTestCase, LiveServerTestCase
 from django.utils import timezone
-
+from django.urls import reverse
 from .models import Question
 
-
 # 1. SimpleTestCase
-
-class SimplePageTests(SimpleTestCase):
-    def test_indexpage_statuscode(self):
-        response = self.client.get('/polls/')
+class SimpleTests(SimpleTestCase):
+    def test_index_page_statuscode(self):
+        response = self.client.get(reverse("polls:index"))
         self.assertEqual(response.status_code, 200)
 
 
 # 2. TestCase
-
-class QuestionDatabaseTests(TestCase):
+class QuestionTests(TestCase):
+    # Test creating a question
     def test_create_question(self):
         question = Question.objects.create(
             question_text="Test Question",
@@ -24,7 +22,8 @@ class QuestionDatabaseTests(TestCase):
         )
         self.assertEqual(question.question_text, "Test Question")
 
-    def test_question_exists_in_database(self):
+    # Test that question exists in database
+    def test_question_exists(self):
         Question.objects.create(
             question_text="Another Question",
             pub_date=timezone.now()
@@ -34,9 +33,8 @@ class QuestionDatabaseTests(TestCase):
 
 
 # 3. TransactionTestCase
-
-class QuestionTransactionTests(TransactionTestCase):
-    def test_transaction_question_insert(self):
+class TransactionTests(TransactionTestCase):
+    def test_insert_question(self):
         Question.objects.create(
             question_text="Transaction Test Question",
             pub_date=timezone.now()
@@ -45,9 +43,8 @@ class QuestionTransactionTests(TransactionTestCase):
 
 
 # 4. LiveServerTestCase
-
-class LiveServerPageTests(LiveServerTestCase):
+class LiveServerTests(LiveServerTestCase):
     def test_live_server_index(self):
-        url = self.live_server_url + '/polls/'
+        url = self.live_server_url + reverse("polls:index")
         response = urllib.request.urlopen(url)
         self.assertEqual(response.status, 200)
