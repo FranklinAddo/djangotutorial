@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-61_m28u-@m65s_v-bk(q8
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://djangotutorial-production-a1bf.up.railway.app']  
+CSRF_TRUSTED_ORIGINS = ['https://djangotutorial-production-a1bf.up.railway.app']
 
 
 # Application definition
@@ -121,4 +121,4 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
